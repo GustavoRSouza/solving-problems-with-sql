@@ -19,7 +19,7 @@ create table bee3480.chairs(
 insert into bee3480.chairs(
 	id,
 	queue,
-	available
+	available is TRUE
 )values
 	(1	,1	,FALSE),
 	(2	,1	,FALSE),
@@ -57,7 +57,17 @@ insert into bee3480.chairs(
 	
 -- problem soluction
 select
-	
+	a.queue,
+	a.id as left,
+	b.id as right
 from
-	
-;
+	bee3480.chairs a
+inner join
+	bee3480.chairs b
+	on a.queue = b.queue
+	and a.id + 1 = b.id
+where
+	a.available is TRUE
+	and b.available is TRUE
+order by
+	a.queue;
