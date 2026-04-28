@@ -226,7 +226,7 @@ with tabela_salario as (
 	select
 		a.matr,
 		b.nome as departamento,
-		sum(coalesce(d.valor,0)) as vencimento
+		coalesce(sum(d.valor),0) as vencimento
 	from
 		bee2991.empregado a
 	left join
@@ -263,11 +263,11 @@ tabela_desconto as (
 		b.nome
 )
 select
-	a.departamento,
-	count(a.matr) as qtd_funcionarios,
-	round(avg(a.vencimento - b.desconto),2) as media_salarial,
-	round(max(a.vencimento - b.desconto),2) as maior_salario,
-	round(min(a.vencimento - b.desconto),2) as menor_salario
+	a.departamento as "Nome Departamento",
+	count(a.matr) as "Numero de Empregados",
+	round(avg(a.vencimento - b.desconto),2) as "Media Salarial",
+	max(a.vencimento - b.desconto) as "Maior Salario",
+	min(a.vencimento - b.desconto) as "Menor Salario"
 from
 	tabela_salario a
 left join
@@ -276,4 +276,4 @@ left join
 group by
 	a.departamento
 order by
-	media_salarial desc;
+	"Media Salarial" desc;
